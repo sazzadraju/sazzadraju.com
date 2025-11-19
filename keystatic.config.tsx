@@ -5,9 +5,6 @@ export default config({
     kind: 'github',
     repo: 'sazzadraju/sazzadraju.com',
   },
-  cloud: {
-    project: 'sazzadraju/sazzadraju-com',
-  },
   collections: {
     posts: collection({
       label: 'Blog Posts',
