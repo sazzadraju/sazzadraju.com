@@ -1,65 +1,320 @@
+import Link from "next/link";
 import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { profile } from "@/data/profile";
+import { experience } from "@/data/experience";
+import { projects } from "@/data/projects";
+import { skills } from "@/data/skills";
+import { getRecentPosts } from "@/lib/blog";
 
-export default function Home() {
+export default async function Home() {
+  const recentPosts = await getRecentPosts(3);
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <main className="min-h-screen bg-white">
+      {/* Navigation */}
+      <nav className="fixed top-0 w-full bg-white z-50 border-b">
+        <div className="max-w-6xl mx-auto px-6 py-3 flex justify-between items-center">
+          <div className="hidden md:flex gap-6 text-sm items-center">
+            <Link href="#" className="hover:text-slate-800 transition">Home</Link>
+            <Link href="#about" className="hover:text-slate-800 transition">About</Link>
+            <Link href="#projects" className="hover:text-slate-800 transition">Projects</Link>
+            <Link href="#experience" className="hover:text-slate-800 transition">Experience</Link>
+            <Link href="/blog" className="hover:text-slate-800 transition">Blog</Link>
+            <Link href="#contact" className="hover:text-slate-800 transition">Contact</Link>
+          </div>
+          <div className="flex items-center gap-3">
+            <Link href={profile.linkedin} target="_blank" className="text-gray-600 hover:text-slate-800 transition">
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+            </Link>
+            <Link href="https://facebook.com/sazzadraju" target="_blank" className="text-gray-600 hover:text-slate-800 transition">
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </Link>
+            <Link href={`mailto:${profile.email}`} className="text-gray-600 hover:text-slate-800 transition">
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            </Link>
+            <Link href="/resume.pdf" target="_blank" className="ml-2 px-4 py-2 bg-slate-800 text-white rounded-lg hover:bg-slate-900 transition text-xs font-semibold">Download Resume</Link>
+          </div>
+        </div>
+      </nav>
+
+      {/* Hero Section */}
+      <section className="pt-24 pb-12 px-6 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex flex-col md:flex-row gap-10 items-start">
+            {/* Left Side - Content */}
+            <div className="flex-[2]">
+              <Badge className="bg-slate-800 text-white hover:bg-slate-900 mb-3">Available for opportunities</Badge>
+              <h1 className="text-4xl md:text-5xl font-bold mb-3 leading-tight text-gray-900">
+                {profile.name}
+              </h1>
+              <p className="text-2xl font-semibold mb-4 text-slate-700">
+                Product Manager & SaaS Expert
+              </p>
+              
+              {/* Career Summary */}
+              <div className="mb-4">
+                <p className="text-gray-700 leading-relaxed text-justify">
+                  <strong>12+ years</strong> leading global teams in <strong>SaaS, ERP, and cloud solutions</strong>. Specialized in <strong>GDPR compliance</strong> and <strong>operational excellence</strong> across <strong>retail, healthcare, and logistics</strong>. Expert in <strong>Agile methodologies</strong> and reducing costs by up to <strong>30%</strong>.
+                </p>
+              </div>
+
+              {/* Key Highlights */}
+              <div className="mb-6 flex flex-wrap gap-3 text-sm">
+                <div className="flex items-center gap-2 text-gray-600">
+                  <span>📍</span>
+                  <span>{profile.location}</span>
+                </div>
+                <div className="flex items-center gap-2 text-gray-600">
+                  <span>🌐</span>
+                  <span>Global Team Leadership</span>
+                </div>
+                <div className="flex items-center gap-2 text-gray-600">
+                  <span>🏆</span>
+                  <span>National ICT Award Winner</span>
+                </div>
+                <div className="flex items-center gap-2 text-gray-600">
+                  <span>💼</span>
+                  <span>$500K+ Budget Management</span>
+                </div>
+              </div>
+
+              <div className="flex gap-3 flex-wrap">
+                <Button variant="outline" asChild className="border-2 border-slate-800 text-slate-800 hover:bg-slate-50">
+                  <Link href="#contact">Get in Touch</Link>
+                </Button>
+                <Button variant="outline" asChild className="border-2 border-slate-800 text-slate-800 hover:bg-slate-50">
+                  <Link href="#projects">View Work</Link>
+                </Button>
+
+              </div>
+            </div>
+            
+            {/* Right Side - Profile Picture */}
+            <div className="flex-1 flex justify-center md:justify-end">
+              <div className="relative w-72 h-72 md:w-80 md:h-80">
+                <Image
+                  src="/profile.jpg"
+                  alt={profile.name}
+                  fill
+                  className="object-cover rounded-lg shadow-lg"
+                  priority
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section className="py-10 px-6 bg-slate-50">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="text-center p-4 rounded-lg bg-gray-50 border">
+              <div className="text-3xl font-bold mb-1 text-slate-800">12+</div>
+              <div className="text-sm text-gray-600">Years Experience</div>
+            </div>
+            <div className="text-center p-4 rounded-lg bg-gray-50 border">
+              <div className="text-3xl font-bold mb-1 text-slate-800">50+</div>
+              <div className="text-sm text-gray-600">Projects Delivered</div>
+            </div>
+            <div className="text-center p-4 rounded-lg bg-gray-50 border">
+              <div className="text-3xl font-bold mb-1 text-slate-800">1M+</div>
+              <div className="text-sm text-gray-600">Clients Served</div>
+            </div>
+            <div className="text-center p-4 rounded-lg bg-gray-50 border">
+              <div className="text-3xl font-bold mb-1 text-slate-800">30+</div>
+              <div className="text-sm text-gray-600">Team Members Led</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* About Section */}
+      <section id="about" className="py-12 px-6 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-10 items-start">
+            <div>
+              <h2 className="text-3xl font-bold mb-4 text-gray-900">About Me</h2>
+              <p className="text-gray-700 leading-relaxed mb-4 text-justify">{profile.summary}</p>
+              <p className="text-gray-700 leading-relaxed mb-4 text-justify">
+                Throughout my career, I have successfully delivered high-impact projects across multiple industries, consistently exceeding client expectations. My approach combines strategic thinking with hands-on execution, ensuring that products not only meet technical requirements but also drive measurable business outcomes.
+              </p>
+              <Button variant="outline" asChild className="border-2 border-slate-800 text-slate-800 hover:bg-slate-50">
+                <Link href="/resume.pdf" target="_blank">Download Resume →</Link>
+              </Button>
+            </div>
+            
+            <div className="space-y-4">
+              <div className="p-5 rounded-xl bg-gradient-to-br from-slate-50 to-slate-100 border-2 border-slate-200">
+                <h3 className="text-sm font-bold text-slate-800 mb-3">Technical Expertise</h3>
+                <div className="flex flex-wrap gap-2">
+                  {skills.technical.map((skill) => (
+                    <Badge key={skill} className="bg-slate-800 text-white hover:bg-slate-900 text-xs">{skill}</Badge>
+                  ))}
+                </div>
+              </div>
+
+              <div className="p-5 rounded-xl bg-gradient-to-br from-slate-50 to-slate-100 border-2 border-slate-200">
+                <h3 className="text-sm font-bold text-slate-800 mb-3">Project Management</h3>
+                <div className="flex flex-wrap gap-2">
+                  {skills.projectManagement.map((skill) => (
+                    <Badge key={skill} className="bg-slate-800 text-white hover:bg-slate-900 text-xs">{skill}</Badge>
+                  ))}
+                </div>
+              </div>
+
+              <div className="p-5 rounded-xl bg-gradient-to-br from-slate-50 to-slate-100 border-2 border-slate-200">
+                <h3 className="text-sm font-bold text-slate-800 mb-3">Compliance</h3>
+                <div className="flex flex-wrap gap-2">
+                  {skills.compliance.map((skill) => (
+                    <Badge key={skill} className="bg-slate-800 text-white hover:bg-slate-900 text-xs">{skill}</Badge>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Projects Section */}
+      <section id="projects" className="py-12 px-6 bg-slate-50">
+        <div className="max-w-6xl mx-auto">
+          <div className="mb-8 text-center">
+            <h2 className="text-3xl font-bold mb-2 text-gray-900">Featured Projects</h2>
+            <p className="text-gray-600">Award-winning solutions that drive business impact</p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 gap-6">
+            {projects.slice(0, 4).map((project, idx) => (
+              <Card key={project.title} className="border-2 hover:border-slate-800 transition-all hover:shadow-lg">
+                <CardHeader className="pb-3">
+                  <div className="flex justify-between items-start mb-2">
+                    <Badge className="bg-slate-800 text-white text-xs">{project.category}</Badge>
+                    <span className="text-xs font-bold text-gray-300">0{idx + 1}</span>
+                  </div>
+                  <CardTitle className="text-xl">{project.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-gray-700 mb-3 leading-relaxed">{project.description}</p>
+                  <div className="flex flex-wrap gap-1 mb-3">
+                    {project.tech.map((tech) => (
+                      <Badge key={tech} variant="outline" className="text-xs">{tech}</Badge>
+                    ))}
+                  </div>
+                  <p className="text-xs font-semibold text-slate-700">{project.impact}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+          <div className="text-center mt-8">
+            <Button asChild variant="outline" className="border-2 border-slate-800 text-slate-800 hover:bg-slate-50">
+              <Link href="/projects">View All Projects →</Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Experience Section */}
+      <section id="experience" className="py-12 px-6 bg-gradient-to-br from-slate-50 to-indigo-50">
+        <div className="max-w-6xl mx-auto">
+          <div className="mb-8 text-center">
+            <h2 className="text-3xl font-bold mb-2 text-gray-900">Experience</h2>
+            <p className="text-gray-600">Leading teams and delivering results</p>
+          </div>
+          
+          <div className="space-y-6">
+            {experience.map((exp) => (
+              <div key={exp.company} className="relative pl-6 border-l-2 border-slate-300">
+                <div className="absolute -left-2 top-0 w-4 h-4 rounded-full bg-slate-800"></div>
+                <div className="bg-white p-4 rounded-lg shadow-sm border">
+                  <Badge className="mb-2 bg-slate-800 text-white text-xs">{exp.period}</Badge>
+                  <h3 className="text-xl font-bold mb-1 text-gray-900">{exp.title}</h3>
+                  <p className="text-slate-700 font-semibold mb-1">{exp.company}</p>
+                  <p className="text-xs text-gray-500 mb-3">{exp.location}</p>
+                  <ul className="space-y-1">
+                    {exp.achievements.map((achievement, idx) => (
+                      <li key={idx} className="text-sm text-gray-700 flex gap-2">
+                        <span className="text-slate-700 mt-0.5">→</span>
+                        <span>{achievement}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Blog Section */}
+      <section id="blog" className="py-12 px-6 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="mb-8 text-center">
+            <h2 className="text-3xl font-bold mb-2 text-gray-900">Latest from Blog</h2>
+            <p className="text-gray-600">Insights on product management, SaaS, and leadership</p>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-6">
+            {recentPosts.map((post) => (
+              <Link key={post.slug} href={`/blog/${post.slug}`}>
+                <Card className="border-2 hover:border-slate-800 transition-all hover:shadow-lg h-full">
+                  <CardHeader className="pb-3">
+                    <Badge className="w-fit mb-2 bg-slate-800 text-white text-xs capitalize">{post.entry.category}</Badge>
+                    <CardTitle className="text-lg">{post.entry.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-gray-600 mb-2">{post.entry.excerpt}</p>
+                    <p className="text-xs text-gray-400">
+                      {new Date(post.entry.date || '').toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                      })}
+                    </p>
+                  </CardContent>
+                </Card>
+              </Link>
+            ))}
+          </div>
+          <div className="text-center mt-8">
+            <Button asChild variant="outline" className="border-2 border-slate-800 text-slate-800 hover:bg-slate-50">
+              <Link href="/blog">View All Posts →</Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section id="contact" className="py-16 px-6 bg-gray-900 text-white">
+        <div className="max-w-6xl mx-auto text-center">
+          <h2 className="text-4xl font-bold mb-4">Let's Work Together</h2>
+          <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
+            Have a project in mind or want to discuss opportunities? I'd love to hear from you.
           </p>
+          <div className="flex gap-3 justify-center flex-wrap">
+            <Button variant="secondary" asChild className="bg-white text-slate-900 hover:bg-slate-100">
+              <a href={`mailto:${profile.email}`}>Email Me</a>
+            </Button>
+            <Button variant="outline" asChild className="border-2 border-white text-white hover:bg-white hover:text-gray-900">
+              <Link href={profile.linkedin} target="_blank">LinkedIn</Link>
+            </Button>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-6 px-6 bg-black text-gray-400">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-3 text-sm">
+          <p>© 2025 {profile.name}. All rights reserved.</p>
+          <div className="flex gap-6">
+            <Link href={profile.linkedin} target="_blank" className="hover:text-slate-300 transition">LinkedIn</Link>
+            <Link href={`mailto:${profile.email}`} className="hover:text-slate-300 transition">Email</Link>
+            <Link href="#blog" className="hover:text-slate-300 transition">Blog</Link>
+          </div>
         </div>
-      </main>
-    </div>
+      </footer>
+    </main>
   );
 }
