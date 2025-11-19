@@ -56,7 +56,7 @@ export default async function Home() {
               {/* Career Summary */}
               <div className="mb-4">
                 <p className="text-gray-700 leading-relaxed text-justify">
-                  <strong>12+ years</strong> leading global teams in <strong>SaaS, ERP, and cloud solutions</strong>. Specialized in <strong>GDPR compliance</strong> and <strong>operational excellence</strong> across <strong>retail, healthcare, and logistics</strong>. Expert in <strong>Agile methodologies</strong> and reducing costs by up to <strong>30%</strong>.
+                  <strong>12+ years</strong> leading global teams in <strong>SaaS, ERP, and cloud solutions</strong>. Specialized in <strong>CMMI L3, GDPR, and ISO 27001 compliance</strong> with <strong>operational excellence</strong> across <strong>retail, healthcare, and logistics</strong>. Expert in <strong>Agile methodologies</strong> and reducing costs by up to <strong>30%</strong>.
                 </p>
               </div>
 

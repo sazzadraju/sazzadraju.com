@@ -2,8 +2,12 @@ import { config, fields, collection } from '@keystatic/core';
 
 export default config({
   storage: {
-    kind: 'github',
-    repo: 'sazzadraju/sazzadraju.com',
+    kind: 'local',
+  },
+  ui: {
+    brand: {
+      name: 'Sazzad Blog Admin',
+    },
   },
   collections: {
     posts: collection({
