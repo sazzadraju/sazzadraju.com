@@ -7,17 +7,11 @@ import { profile } from "@/data/profile";
 import { experience } from "@/data/experience";
 import { projects } from "@/data/projects";
 import { skills } from "@/data/skills";
-import { getRecentPosts } from "@/lib/blog";
+import { getRecentPostsSimple } from "@/lib/blog-simple";
 import ClientHeader from "@/components/ClientHeader";
 
 export default async function Home() {
-  let recentPosts = [];
-  try {
-    recentPosts = await getRecentPosts(3);
-  } catch (error) {
-    console.error('Failed to load recent posts:', error);
-    recentPosts = [];
-  }
+  const recentPosts = await getRecentPostsSimple(3);
   return (
     <main className="min-h-screen bg-white">
       <ClientHeader />
