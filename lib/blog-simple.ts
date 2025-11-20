@@ -11,11 +11,12 @@ export async function getRecentPostsSimple(limit: number = 3) {
       const filePath = path.join(blogDir, filename);
       const fileContent = fs.readFileSync(filePath, 'utf8');
       const { data } = matter(fileContent);
+      const slug = filename.replace('.mdoc', '');
       
       return {
-        slug: filename.replace('.mdoc', ''),
+        slug: slug,
         entry: {
-          title: data.title || filename.replace('.mdoc', ''),
+          title: slug,
           date: data.date,
           category: data.category,
           excerpt: data.excerpt,
