@@ -16,7 +16,7 @@ export async function getRecentPostsSimple(limit: number = 3) {
       return {
         slug: slug,
         entry: {
-          title: slug,
+          title: data.title || slug,
           date: data.date,
           category: data.category,
           excerpt: data.excerpt,
