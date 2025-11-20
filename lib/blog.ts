@@ -1,7 +1,8 @@
 import { createReader } from '@keystatic/core/reader';
 import keystaticConfig from '../keystatic.config';
+import path from 'path';
 
-const reader = createReader(process.cwd(), keystaticConfig);
+const reader = createReader(path.join(process.cwd()), keystaticConfig);
 
 export async function getAllPosts() {
   const posts = await reader.collections.posts.all();

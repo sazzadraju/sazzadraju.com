@@ -11,7 +11,13 @@ import { getRecentPosts } from "@/lib/blog";
 import ClientHeader from "@/components/ClientHeader";
 
 export default async function Home() {
-  const recentPosts = await getRecentPosts(3);
+  let recentPosts = [];
+  try {
+    recentPosts = await getRecentPosts(3);
+  } catch (error) {
+    console.error('Failed to load recent posts:', error);
+    recentPosts = [];
+  }
   return (
     <main className="min-h-screen bg-white">
       <ClientHeader />
@@ -233,8 +239,13 @@ export default async function Home() {
             <p className="text-gray-600">Insights on product management, SaaS, and leadership</p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-6">
-            {recentPosts.map((post) => (
+          {recentPosts.length === 0 ? (
+            <div className="text-center py-12 col-span-3">
+              <p className="text-gray-600">Blog posts coming soon!</p>
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-3 gap-6">
+              {recentPosts.map((post) => (
               <Link key={post.slug} href={`/blog/${post.slug}`}>
                 <Card className="border-2 hover:border-slate-800 transition-all hover:shadow-lg h-full">
                   <CardHeader className="pb-3">
@@ -253,8 +264,9 @@ export default async function Home() {
                   </CardContent>
                 </Card>
               </Link>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
           <div className="text-center mt-8">
             <Button asChild variant="outline" className="border-2 border-slate-800 text-slate-800 hover:bg-slate-50">
               <Link href="/blog">View All Posts →</Link>
