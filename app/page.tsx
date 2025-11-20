@@ -1,5 +1,3 @@
-'use client';
-
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -9,20 +7,14 @@ import { profile } from "@/data/profile";
 import { experience } from "@/data/experience";
 import { projects } from "@/data/projects";
 import { skills } from "@/data/skills";
-import Header from "@/components/Header";
-import { useEffect, useState } from "react";
+import { getRecentPosts } from "@/lib/blog";
+import ClientHeader from "@/components/ClientHeader";
 
-export default function Home() {
-  const [recentPosts, setRecentPosts] = useState<any[]>([]);
-
-  useEffect(() => {
-    fetch('/api/recent-posts')
-      .then(res => res.json())
-      .then(data => setRecentPosts(data));
-  }, []);
+export default async function Home() {
+  const recentPosts = await getRecentPosts(3);
   return (
     <main className="min-h-screen bg-white">
-      <Header />
+      <ClientHeader />
 
       {/* Hero Section */}
       <section className="pt-24 pb-12 px-6 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
