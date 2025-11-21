@@ -24,7 +24,7 @@ export async function POST(request: Request) {
     // Send email via Resend
     await resend.emails.send({
       from: 'Contact Form <onboarding@resend.dev>',
-      to: process.env.CONTACT_EMAIL || 'your-email@example.com',
+      to: process.env.CONTACT_EMAIL || 'sazzadraju@gmail.com',
       subject: `New Contact Form Submission from ${name}`,
       html: `
         <h2>New Contact Form Submission</h2>
