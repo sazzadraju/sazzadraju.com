@@ -119,9 +119,10 @@ export default async function Home() {
               <p className="text-gray-700 leading-relaxed mb-4 text-justify">
                 Throughout my career, I have successfully delivered high-impact projects across multiple industries, consistently exceeding client expectations. My approach combines strategic thinking with hands-on execution, ensuring that products not only meet technical requirements but also drive measurable business outcomes.
               </p>
-              <Button variant="outline" asChild className="border-2 border-slate-800 text-slate-800 hover:bg-slate-50">
-                <Link href="/resume.pdf" target="_blank">Download Resume →</Link>
-              </Button>
+              <Link href="/resume.pdf" target="_blank" className="inline-flex items-center gap-1.5 px-4 py-2 border-2 border-slate-800 text-slate-800 rounded-lg hover:bg-slate-50 transition text-xs font-semibold">
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                Resume
+              </Link>
             </div>
             
             <div className="space-y-4">
