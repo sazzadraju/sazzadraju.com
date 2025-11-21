@@ -21,19 +21,24 @@ export async function POST(request: Request) {
     // Save to database
     await saveContact(name, email, message);
 
-    // Send email via Resend
-    await resend.emails.send({
-      from: 'Contact Form <onboarding@resend.dev>',
-      to: process.env.CONTACT_EMAIL || 'sazzadraju@gmail.com',
-      subject: `New Contact Form Submission from ${name}`,
-      html: `
-        <h2>New Contact Form Submission</h2>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Message:</strong></p>
-        <p>${message.replace(/\n/g, '<br>')}</p>
-      `,
-    });
+    // Try to send email via Resend (optional, won't fail if it doesn't work)
+    try {
+      await resend.emails.send({
+        from: 'Contact Form <onboarding@resend.dev>',
+        to: process.env.CONTACT_EMAIL || 'sazzadraju@gmail.com',
+        subject: `New Contact Form Submission from ${name}`,
+        html: `
+          <h2>New Contact Form Submission</h2>
+          <p><strong>Name:</strong> ${name}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Message:</strong></p>
+          <p>${message.replace(/\n/g, '<br>')}</p>
+        `,
+      });
+    } catch (emailError) {
+      console.error('Email sending failed:', emailError);
+      // Continue anyway - message is saved in database
+    }
 
     return NextResponse.json({ success: true });
   } catch (error) {
