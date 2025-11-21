@@ -16,10 +16,20 @@ export async function POST(request: Request) {
     }
 
     // Create table if it doesn't exist
-    await createContactsTable();
+    try {
+      await createContactsTable();
+    } catch (dbError) {
+      console.error('Database table creation error:', dbError);
+      throw new Error('Database connection failed');
+    }
 
     // Save to database
-    await saveContact(name, email, message);
+    try {
+      await saveContact(name, email, message);
+    } catch (dbError) {
+      console.error('Database save error:', dbError);
+      throw new Error('Failed to save contact');
+    }
 
     // Try to send email via Resend (optional, won't fail if it doesn't work)
     try {
