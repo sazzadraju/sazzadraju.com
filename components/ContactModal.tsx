@@ -4,7 +4,11 @@ import { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 
-export default function ContactModal() {
+interface ContactModalProps {
+  variant?: 'default' | 'secondary';
+}
+
+export default function ContactModal({ variant = 'default' }: ContactModalProps) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
@@ -39,7 +43,10 @@ export default function ContactModal() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="default" className="bg-slate-800 hover:bg-slate-900">
+        <Button 
+          variant={variant} 
+          className={variant === 'secondary' ? 'bg-white text-slate-900 hover:bg-slate-100' : 'bg-slate-800 hover:bg-slate-900'}
+        >
           Contact Me
         </Button>
       </DialogTrigger>

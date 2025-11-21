@@ -9,6 +9,7 @@ import { projects } from "@/data/projects";
 import { skills } from "@/data/skills";
 import { getRecentPostsSimple } from "@/lib/blog-simple";
 import ClientHeader from "@/components/ClientHeader";
+import ContactModal from "@/components/ContactModal";
 
 export default async function Home() {
   const recentPosts = await getRecentPostsSimple(3);
@@ -277,9 +278,7 @@ export default async function Home() {
             Have a project in mind or want to discuss opportunities? I'd love to hear from you.
           </p>
           <div className="flex gap-3 justify-center flex-wrap">
-            <Button variant="secondary" asChild className="bg-white text-slate-900 hover:bg-slate-100">
-              <a href={`mailto:${profile.email}`}>Email Me</a>
-            </Button>
+            <ContactModal variant="secondary" />
             <Button variant="outline" asChild className="border-2 border-white text-white hover:bg-white hover:text-gray-900">
               <Link href={profile.linkedin} target="_blank">LinkedIn</Link>
             </Button>
@@ -293,7 +292,6 @@ export default async function Home() {
           <p>© 2025 {profile.name}. All rights reserved.</p>
           <div className="flex gap-6">
             <Link href={profile.linkedin} target="_blank" className="hover:text-slate-300 transition">LinkedIn</Link>
-            <Link href={`mailto:${profile.email}`} className="hover:text-slate-300 transition">Email</Link>
             <Link href="#blog" className="hover:text-slate-300 transition">Blog</Link>
           </div>
         </div>

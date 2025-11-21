@@ -50,6 +50,9 @@ export default function Header() {
               <Link href="/#experience" onClick={() => setIsOpen(false)} className="hover:text-slate-800 transition">Experience</Link>
               <Link href="/blog" onClick={() => setIsOpen(false)} className="hover:text-slate-800 transition">Blog</Link>
               <Link href="/#contact" onClick={() => setIsOpen(false)} className="hover:text-slate-800 transition">Contact</Link>
+              <div className="pt-2">
+                <ContactModal />
+              </div>
             </div>
           </div>
         )}
