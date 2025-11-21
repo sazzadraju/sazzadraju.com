@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { profile } from "@/data/profile";
 import { useState } from "react";
+import ContactModal from "@/components/ContactModal";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -37,6 +38,7 @@ export default function Header() {
           <Link href={`mailto:${profile.email}`} className="text-gray-600 hover:text-slate-800 transition">
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
           </Link>
+          <ContactModal />
           <Link href="/resume.pdf" target="_blank" className="ml-2 px-4 py-2 bg-slate-800 text-white rounded-lg hover:bg-slate-900 transition text-xs font-semibold">Download Resume</Link>
         </div>
         {isOpen && (
